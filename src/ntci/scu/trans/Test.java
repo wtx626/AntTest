@@ -1,6 +1,6 @@
 package ntci.scu.trans;
 
-import java.util.HashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created with IntelliJ IDEA.
@@ -10,7 +10,7 @@ import java.util.HashMap;
  */
 public class Test {
     //使用hashmap来存放账户和余额信息
-    volatile static HashMap<String, Double> account = new HashMap<>();
+    static ConcurrentHashMap<String, Double> account = new ConcurrentHashMap<>();
 
     public static void main(String[] args) throws Exception {
         account.put("001", (double) 400);

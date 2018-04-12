@@ -57,7 +57,7 @@ public class AntTransfrom implements Transfrom {
     }
 
     @Override
-    public boolean transfrom(String from, String to, double amount, String orderNo) throws Exception {
+    public synchronized boolean transfrom(String from, String to, double amount, String orderNo) throws Exception {
         if (Test.account.get(from) < amount) {
             throw new Exception("账户余额不足");
         }
