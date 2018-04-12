@@ -1,5 +1,7 @@
 package ntci.scu.trans;
 
+import ntci.scu.util.Constant;
+
 /**
  * Created with IntelliJ IDEA.
  * User: wutianxiong
@@ -58,12 +60,18 @@ public class AntTransfrom implements Transfrom {
 
     @Override
     public synchronized boolean transfrom(String from, String to, double amount, String orderNo) throws Exception {
-        if (Test.account.get(from) < amount) {
+        if (Constant.account.get(from) < amount) {
             throw new Exception("账户余额不足");
         }
-        Test.account.put(from, Test.account.get(from) - amount);
-        Test.account.put(to, Test.account.get(to) + amount);
-        System.out.println(Thread.currentThread()+"\t"+from + "余额：" + Test.account.get(from));
+        if (Constant.order.contains(orderNo)) {
+            throw new Exception("该订单已经处理");
+        }
+        //储存已经处理的订单号
+        Constant.order.add(orderNo);
+        //对相应的账号余额进行更新
+        Constant.account.put(from, Constant.account.get(from) - amount);
+        Constant.account.put(to, Constant.account.get(to) + amount);
+        System.out.println(Thread.currentThread() + "\t" + from + "余额：" + Constant.account.get(from));
         return true;
     }
 
